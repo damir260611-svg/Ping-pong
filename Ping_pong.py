@@ -70,6 +70,22 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
+        if e.type == KEYDOWN:
+            if e.key == K_r:
+                player_1.update_left()
+                player_2.update_right()
+                tennis_ball.update()
+                player_1.reset()
+                player_2.reset()
+                tennis_ball.reset()
+                score_left = 0
+                score_right = 0
+                score_left_text = font_1.render('Счёт:' + str(score_left), True, (255, 255, 255))
+                win.blit(score_left_text, (10, 10))
+                score_right_text = font_1.render('Счёт:' + str(score_right), True, (255, 255, 255))
+                win.blit(score_right_text, (625, 10))
+                mixer.music.play()
+                finish = False       
     win.blit(background, (0, 0))
     if not finish:
         player_1.update_left()
@@ -82,15 +98,19 @@ while game:
         win.blit(score_left_text, (10, 10))
         score_right_text = font_1.render('Счёт:' + str(score_right), True, (255, 255, 255))
         win.blit(score_right_text, (625, 10))
-    if score_left >= 10:
+    if score_left >= 1:
         finish = True
         text_left_win = font_2.render('Игрок слева победил!', True, (0, 255, 0))
         win.blit(text_left_win, (160, 200))
         mixer.music.stop()
-    if score_right >= 10:
+        reset_text = font_1.render('Нажмите r, чтобы перезапустить', True, (255, 130, 0))
+        win.blit(reset_text, (205, 250))
+    if score_right >= 1:
         finish = True
         text_right_win = font_2.render('Игрок справа победил!', True, (0, 255, 0))
-        win.blit(text_right_win, (150, 200))
+        win.blit(text_win.blit(reset_text, (160, 200)), (150, 600))
         mixer.music.stop()
+        reset_text = font_1.render('Нажмите r, чтобы перезапустить', True, (255, 130, 0))
+        win.blit(reset_text, (205, 250))
     display.update()
     clock.tick(FPS)
